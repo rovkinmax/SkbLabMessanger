@@ -1,0 +1,92 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.getkeepsafe.dexcount'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+    defaultConfig {
+        applicationId "ru.rovkinmax.skblabmessanger"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+
+        buildConfigField 'String', 'API_BACKENDLESS', "\"https://api.backendless.com\""
+        buildConfigField 'String', 'API_KEY_BACKENDLESS', "\"D5AB0F08-0665-64D2-FF19-A46F8E8E2F00\""
+        buildConfigField 'String', 'APP_ID_BACKENDLESS', "\"BE5A8B88-6D7E-FDFB-FFC4-42C08A039B00\""
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('debug.jks')
+        }
+
+        release {
+            //todo add release credentials
+        }
+    }
+
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        abortOnError false
+    }
+
+    testOptions {
+        unitTests.all {
+            jvmArgs '-noverify'
+        }
+
+        unitTests.returnDefaultValues = true
+    }
+}
+
+configurations {
+    compile.exclude module: 'support-media-compat'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile libraries.kotlinStdlib
+
+    compile "com.android.support:appcompat-v7:$versions.support"
+    compile "com.android.support:recyclerview-v7:$versions.support"
+    compile "com.android.support:design:$versions.support"
+
+    compile "com.arello-mobile:moxy:$versions.moxy"
+    compile "com.arello-mobile:moxy-app-compat:$versions.moxy"
+    kapt "com.arello-mobile:moxy-compiler:$versions.moxy"
+
+    compile "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+    compile(libraries.rxJava) {
+        force true
+    }
+
+    compile 'com.jakewharton.timber:timber:4.1.2'
+
+    compile 'com.backendless:backendless:4.0.0-beta1'
+}

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SkbLabMessanger</string>
+
+    <string name="error.unexpected">Извините, возникла ошибка. Мы взяли ее на прицел. Попробуйте позднее.</string>
+    <string name="error.internet_required">Возможно, нет интернета. Проверьте соединение и повторите попытку.</string>
+
+    <string name="button.close">Закрыть</string>
+    <string name="button.ok">Ок</string>
+
+
+    <string name="main.go_to_chat">Войти в чат</string>
+    <string name="main.hint.username">Введите имя пользователя</string>
+    <string name="chat.menu.exit">Выход</string>
+
+</resources>
